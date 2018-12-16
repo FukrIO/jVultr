@@ -19,7 +19,7 @@ public interface Baremetal {
   
   String getLabel();
   
-  void setLabel(String label);
+  boolean setLabel(String label);
   
   String getTag();
   

@@ -7,6 +7,7 @@ import com.vacrodex.jvultr.entities.baremetal.Baremetal;
 import com.vacrodex.jvultr.entities.baremetal.MetalPlan;
 import com.vacrodex.jvultr.entities.regions.Datacenter;
 import com.vacrodex.jvultr.entities.regions.Region;
+import com.vacrodex.jvultr.entities.regions.impl.ImplDatacenter;
 import com.vacrodex.jvultr.entities.system.Memory;
 import com.vacrodex.jvultr.entities.system.Status;
 import com.vacrodex.jvultr.exceptions.TooSoonException;
@@ -20,8 +21,6 @@ import java.text.ParseException;
 import java.util.Date;
 import lombok.Getter;
 import lombok.ToString;
-import okhttp3.FormBody;
-import okhttp3.MultipartBody;
 import okhttp3.Response;
 
 /**
@@ -58,16 +57,20 @@ public class ImplBaremetal implements Baremetal {
   }
   
   @Override
-  public void setLabel(String label) {
-    this.label = label;
-    
-    //todo Send request
+  public boolean setLabel(String label) {
+    return new RestRequest<Response>(getJVultr(), RestMethods.POST, RestEndpoints.BAREMETAL_LABEL_SET)
+        .setBody("SUBID=" + getSubId() + "&label=" + label)
+        .execute(RestRequestResult::getResponse)
+        .exceptionally(throwable -> {
+          throwable.printStackTrace();
+          return null;
+        }).join().code() == 200;
   }
   
   @Override
   public boolean halt() {
     return new RestRequest<Response>(getJVultr(), RestMethods.POST, RestEndpoints.BAREMETAL_HALT)
-        .setMultipartBody(new MultipartBody.Builder().addFormDataPart("SUBID", String.valueOf(getSubId())).build())
+        .setBody("SUBID=" + getSubId())
         .execute(RestRequestResult::getResponse)
         .exceptionally(throwable -> {
           throwable.printStackTrace();
@@ -79,7 +82,7 @@ public class ImplBaremetal implements Baremetal {
   public boolean destory() throws TooSoonException {
     //todo Send request
     return new RestRequest<Response>(getJVultr(), RestMethods.POST, RestEndpoints.BAREMTEAL_DESTROY)
-        .setBody("SUBID="+getSubId())
+        .setBody("SUBID=" + getSubId())
         .execute(RestRequestResult::getResponse)
         .exceptionally(throwable -> {
           throwable.printStackTrace();
@@ -95,7 +98,7 @@ public class ImplBaremetal implements Baremetal {
   @Override
   public boolean restart() {
     return new RestRequest<Response>(getJVultr(), RestMethods.POST, RestEndpoints.BAREMETAL_REBOOT)
-        .setMultipartBody(new MultipartBody.Builder().addFormDataPart("SUBID", String.valueOf(getSubId())).build())
+        .setBody("SUBID=" + getSubId())
         .execute(RestRequestResult::getResponse)
         .exceptionally(throwable -> {
           throwable.printStackTrace();
@@ -111,7 +114,7 @@ public class ImplBaremetal implements Baremetal {
   @Override
   public boolean reinstall() {
     return new RestRequest<Response>(getJVultr(), RestMethods.POST, RestEndpoints.BAREMETAL_REINSTALL)
-        .setMultipartBody(new MultipartBody.Builder().addFormDataPart("SUBID", String.valueOf(getSubId())).build())
+        .setBody("SUBID=" + getSubId())
         .execute(RestRequestResult::getResponse)
         .exceptionally(throwable -> {
           throwable.printStackTrace();
@@ -148,7 +151,7 @@ public class ImplBaremetal implements Baremetal {
   
     System.out.println(body);
     
-    // TODO: Implement: OS, Metal Plan, Data Center,
+    // TODO: Implement: OS, Metal Plan,
     ip = body.get("main_ip").asText();
     label = body.get("label").asText();
     tag = body.get("tag").asText();
@@ -167,6 +170,7 @@ public class ImplBaremetal implements Baremetal {
     
     defaultPassword = body.get("default_password").asText();
     region = getJVultr().getRegionByName(body.get("location").asText());
+    datacenter = new ImplDatacenter(body.get("DCID").asInt());
     
     return true;
   }
