@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.ToString;
 
 /**
+ * TODO: Do something with this??
+ *
  * @author Cameron Wolfe
  */
 @Getter
@@ -21,27 +23,27 @@ public class Bandwidth {
   }
   
   public long[] incomingKB() {
-    return incomingDivide(1024);
+    return incomingDivide(1000);
   }
   
   public long[] incomingMB() {
-    return incomingDivide(1024 * 1024);
+    return incomingDivide(1000 * 1000);
   }
   
   public long[] incomingGB() {
-    return incomingDivide(1024 * 1024 * 1024);
+    return incomingDivide(1000 * 1000 * 1000);
   }
   
   public long[] outgoingKB() {
-    return outgoingDivide(1024);
+    return outgoingDivide(1000);
   }
   
   public long[] outgoingMB() {
-    return outgoingDivide(1024 * 1024);
+    return outgoingDivide(1000 * 1000);
   }
   
   public long[] outgoingGB() {
-    return outgoingDivide(1024 * 1024 * 1024);
+    return outgoingDivide(1000 * 1000 * 1000);
   }
   
   private long[] divideArray(int numerator, long[] array) {

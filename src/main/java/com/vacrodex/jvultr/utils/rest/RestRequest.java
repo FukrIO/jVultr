@@ -260,8 +260,10 @@ public class RestRequest<T> {
     
     try (Response response = getApi().getHttpClient().newCall(requestBuilder.build()).execute()) {
       RestRequestResult result = new RestRequestResult(this, response);
-      log.debug("Sent {} request to {} and received status code {} with{} body{}", method.name(), endpoint.getFullUrl(urlParameters), response.code(),
-          result.getBody().map(b -> "").orElse(" empty"), result.getStringBody().map(s -> " " + s).orElse(""));
+      log.debug("Sent {} request to {} and received status code {} with{} body{}", method.name(), endpoint.getFullUrl(urlParameters), response.code(), result
+          .getBody()
+          .map(b -> "")
+          .orElse(" empty"), result.getStringBody().map(s -> " " + s).orElse(""));
       
       switch (response.code()) {
         case 400:

@@ -49,8 +49,7 @@ public class RestRequestResult {
         throw new InvalidKeyException();
       }
       
-      if (stringBody.equals("Invalid server.") || stringBody
-          .equals("Invalid server. Check SUBID value and ensure your API key matches the server's account")) {
+      if (stringBody.equals("Invalid server.") || stringBody.equals("Invalid server. Check SUBID value and ensure your API key matches the server's account")) {
         throw new InvalidSubscriptionId();
       }
       

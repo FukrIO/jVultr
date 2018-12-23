@@ -5,11 +5,9 @@ import com.vacrodex.jvultr.entities.backup.Backup;
 import com.vacrodex.jvultr.entities.backup.BackupStatus;
 import com.vacrodex.jvultr.utils.DateUtil;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import lombok.Getter;
 import lombok.ToString;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author Cameron Wolfe

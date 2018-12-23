@@ -19,7 +19,6 @@ import com.vacrodex.jvultr.entities.baremetal.impl.ImplMetalBandwidth;
 import com.vacrodex.jvultr.entities.regions.Region;
 import com.vacrodex.jvultr.entities.regions.RegionList;
 import com.vacrodex.jvultr.entities.regions.impl.ImplRegionList;
-import com.vacrodex.jvultr.exceptions.InvalidKeyException;
 import com.vacrodex.jvultr.utils.ThreadPool;
 import com.vacrodex.jvultr.utils.ratelimits.RatelimitManager;
 import com.vacrodex.jvultr.utils.rest.RestEndpoints;
@@ -53,34 +52,39 @@ public class jVultr {
     this.threadPool = new ThreadPool();
     
     this.httpClient = new OkHttpClient.Builder()
-        .addInterceptor(chain ->
-          chain.proceed(chain.request().newBuilder()
-              .addHeader("User-Agent", "jVultr v${version}")
-              .addHeader("API-Key", getKey())
-              .build()
-        )).build();
+        .addInterceptor(chain -> chain.proceed(chain
+            .request()
+            .newBuilder()
+            .addHeader("User-Agent", "jVultr v1.0.0 (https://github.com/Vacrodex/jVultr)")
+            .addHeader("API-Key", getKey())
+            .build()))
+        .build();
     
     this.ratelimitManager = new RatelimitManager(this);
   }
   
   public AccountInformation getAccountInformation() {
     
-    JsonNode body = new RestRequest<JsonNode>(this, RestMethods.GET, RestEndpoints.ACCOUNT_INFORMATION).execute(
-        RestRequestResult::getJsonBody).exceptionally(throwable -> {
-      throwable.printStackTrace();
-      return null;
-    }).join();
+    JsonNode body = new RestRequest<JsonNode>(this, RestMethods.GET, RestEndpoints.ACCOUNT_INFORMATION)
+        .execute(RestRequestResult::getJsonBody)
+        .exceptionally(throwable -> {
+          throwable.printStackTrace();
+          return null;
+        })
+        .join();
     
     return new ImplAccountInformation(body);
   }
   
   public ApplicationList getApplicationList() {
     
-    JsonNode body = new RestRequest<JsonNode>(this, RestMethods.GET, RestEndpoints.APPLICATION_LIST).execute(
-        RestRequestResult::getJsonBody).exceptionally(throwable -> {
-      throwable.printStackTrace();
-      return null;
-    }).join();
+    JsonNode body = new RestRequest<JsonNode>(this, RestMethods.GET, RestEndpoints.APPLICATION_LIST)
+        .execute(RestRequestResult::getJsonBody)
+        .exceptionally(throwable -> {
+          throwable.printStackTrace();
+          return null;
+        })
+        .join();
     
     return new ImplApplicationList(body);
   }
@@ -98,22 +102,26 @@ public class jVultr {
   }
   
   public Information getInformation() {
-    JsonNode body = new RestRequest<JsonNode>(this, RestMethods.GET, RestEndpoints.AUTHORIZATION_INFORMATION).execute(
-        RestRequestResult::getJsonBody).exceptionally(throwable -> {
-      throwable.printStackTrace();
-      return null;
-    }).join();
+    JsonNode body = new RestRequest<JsonNode>(this, RestMethods.GET, RestEndpoints.AUTHORIZATION_INFORMATION)
+        .execute(RestRequestResult::getJsonBody)
+        .exceptionally(throwable -> {
+          throwable.printStackTrace();
+          return null;
+        })
+        .join();
     
     return new ImplInformation(body);
   }
   
   //todo Support filtering by service on a RESTful level
   public BackupList getBackupList() {
-    JsonNode body = new RestRequest<JsonNode>(this, RestMethods.GET, RestEndpoints.BACKUP_LIST).execute(
-        RestRequestResult::getJsonBody).exceptionally(throwable -> {
-      throwable.printStackTrace();
-      return null;
-    }).join();
+    JsonNode body = new RestRequest<JsonNode>(this, RestMethods.GET, RestEndpoints.BACKUP_LIST)
+        .execute(RestRequestResult::getJsonBody)
+        .exceptionally(throwable -> {
+          throwable.printStackTrace();
+          return null;
+        })
+        .join();
     
     return new ImplBackupList(body);
   }
@@ -129,8 +137,8 @@ public class jVultr {
   
   public MetalApplicationList getMetalApplicationList(int subid) {
     
-    JsonNode body = new RestRequest<JsonNode>(this, RestMethods.GET,
-        RestEndpoints.BAREMETAL_APPLICATION_CHANGE_LIST).addQueryParameter("SUBID", String.valueOf(subid))
+    JsonNode body = new RestRequest<JsonNode>(this, RestMethods.GET, RestEndpoints.BAREMETAL_APPLICATION_CHANGE_LIST)
+        .addQueryParameter("SUBID", String.valueOf(subid))
         .execute(RestRequestResult::getJsonBody)
         .exceptionally(throwable -> {
           throwable.printStackTrace();
@@ -160,19 +168,25 @@ public class jVultr {
         .exceptionally(throwable -> {
           throwable.printStackTrace();
           return null;
-        }).join();
+        })
+        .join();
     
     return new ImplMetalBandwidth(body);
   }
   
+  /**
+   * TODO: Implement caching
+   * @return
+   */
   public RegionList getRegionList() {
     JsonNode body = new RestRequest<JsonNode>(this, RestMethods.GET, RestEndpoints.REGIONS_LIST)
         .execute(RestRequestResult::getJsonBody)
         .exceptionally(throwable -> {
           throwable.printStackTrace();
           return null;
-        }).join();
-        
+        })
+        .join();
+    
     return new ImplRegionList(body);
   }
   

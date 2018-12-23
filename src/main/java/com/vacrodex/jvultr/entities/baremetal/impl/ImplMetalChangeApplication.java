@@ -36,11 +36,13 @@ public class ImplMetalChangeApplication implements MetalChangeApplication {
     new RestRequest<RestRequestResult>(getApi(), RestMethods.POST, RestEndpoints.BAREMETAL_APPLICATION_CHANGE)
         .addQueryParameter("SUBID", String.valueOf(getSubId()))
         .addQueryParameter("APPID", String.valueOf(getAppId()))
-        .execute(result -> result).exceptionally(throwable -> {
+        .execute(result -> result)
+        .exceptionally(throwable -> {
           throwable.printStackTrace();
           //todo Implement exception handling
           return null;
-        }).thenAccept(result -> {
+        })
+        .thenAccept(result -> {
           
           successful = result.getResponse().code() == 200;
           if (!successful) {

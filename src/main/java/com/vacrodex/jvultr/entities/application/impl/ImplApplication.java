@@ -2,7 +2,6 @@ package com.vacrodex.jvultr.entities.application.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.vacrodex.jvultr.entities.application.Application;
-import lombok.Data;
 import lombok.Getter;
 import lombok.ToString;
 

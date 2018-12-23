@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.vacrodex.jvultr.entities.account.AccountInformation;
 import com.vacrodex.jvultr.utils.DateUtil;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import lombok.Getter;
 import lombok.ToString;

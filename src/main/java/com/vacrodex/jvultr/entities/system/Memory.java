@@ -16,19 +16,19 @@ public class Memory {
     this.memory = memory;
   }
   
-  public long getRamAsGB() {
-    return getRamAsMB() / 1024;
+  public long getAsGB() {
+    return getAsMB() / 1024;
   }
   
-  public long getRamAsMB() {
-    return getRamAsKB() / 1024;
+  public long getAsMB() {
+    return getAsKB() / 1024;
   }
   
-  public long getRamAsKB() {
-    return getRamAsB() / 1024;
+  public long getAsKB() {
+    return getAsB() / 1024;
   }
   
-  public long getRamAsB() {
+  public long getAsB() {
     return memory;
   }
 }

@@ -33,7 +33,8 @@ public class RatelimitManager {
   
   public void queueRequest(RestRequest<?> request) {
     // Get the bucket for the current request type.
-    RatelimitBucket bucket = buckets.parallelStream()
+    RatelimitBucket bucket = buckets
+        .parallelStream()
         .filter(b -> b.getEndpoint().orElse(null) == request.getEndpoint())
         .findAny()
         .orElse(new RatelimitBucket(request.getEndpoint()));

@@ -4,12 +4,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.vacrodex.jvultr.entities.baremetal.impl.ImplBaremetal;
 import com.vacrodex.jvultr.entities.os.OS;
 import com.vacrodex.jvultr.entities.regions.Datacenter;
+import com.vacrodex.jvultr.entities.regions.Region;
 import com.vacrodex.jvultr.jVultr;
 import com.vacrodex.jvultr.utils.rest.RestEndpoints;
 import com.vacrodex.jvultr.utils.rest.RestMethods;
 import com.vacrodex.jvultr.utils.rest.RestRequest;
 import com.vacrodex.jvultr.utils.rest.RestRequestResult;
-import lombok.Getter;
+import java.util.Base64;
 
 /**
  * @author Cameron Wolfe
@@ -50,6 +51,10 @@ public class BaremetalDeployment {
       this(datacenter.getId(), plan.getId(), os.getId());
     }
     
+    public Builder(Region region, MetalPlan plan, OS os) {
+      this(region.getDatacenter(), plan, os);
+    }
+    
     public Builder(int datacenter, int plan, int os) {
       this.dcId = datacenter;
       this.planId = plan;
@@ -57,7 +62,6 @@ public class BaremetalDeployment {
     }
     
     public Baremetal Create() {
-      System.out.println(QueryParams());
       
       JsonNode body = new RestRequest<JsonNode>(jVultr, RestMethods.POST, RestEndpoints.BAREMETAL_CREATE)
           .setBody(QueryParams())
@@ -65,7 +69,8 @@ public class BaremetalDeployment {
           .exceptionally(throwable -> {
             throwable.printStackTrace();
             return null;
-          }).join();
+          })
+          .join();
       
       if (body.has("SUBID")) {
         return new ImplBaremetal(jVultr, body.get("SUBID").asInt());
@@ -103,7 +108,7 @@ public class BaremetalDeployment {
         builder.append("&hostname=").append(hostname);
       }
       if (userData != null) {
-        builder.append("&userdata=").append(userData); // TODO: base64
+        builder.append("&userdata=").append(Base64.getEncoder().encodeToString(userData.getBytes()));
       }
       
       builder.append("&enable_ipv6=").append(ipv6);
