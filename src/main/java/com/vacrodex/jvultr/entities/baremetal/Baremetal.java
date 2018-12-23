@@ -66,4 +66,6 @@ public interface Baremetal {
   boolean enableIPV6();
   
   boolean refreshInformation();
+  
+  boolean refreshInformation(boolean application, boolean region);
 }
