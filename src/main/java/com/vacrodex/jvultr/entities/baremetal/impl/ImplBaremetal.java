@@ -50,6 +50,17 @@ public class ImplBaremetal implements Baremetal {
   private Application application;
   private Date creationDate;
   
+  // this is for testing un momento gents
+  public ImplBaremetal(jVultr jVultr, int subId, boolean justexistpls, boolean extraInformation) {
+    this.jVultr = jVultr;
+    this.subId = subId;
+    
+    if (!justexistpls) {
+      refreshInformation(extraInformation, extraInformation);
+    }
+    
+  }
+  
   public ImplBaremetal(jVultr jVultr, int subId, boolean extraInformation) {
     this.jVultr = jVultr;
     this.subId = subId;
