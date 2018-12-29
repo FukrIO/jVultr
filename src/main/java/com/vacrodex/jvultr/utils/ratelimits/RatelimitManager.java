@@ -96,9 +96,11 @@ public class RatelimitManager {
             }
             try {
               int sleepTime = bucket.getTimeTillSpaceGetsAvailable();
-              if (sleepTime > 0 && !api.isDisableRatelimiter()) {
-                log.debug("Delaying requests to {} for {}ms to prevent hitting ratelimits", bucket, sleepTime);
-                Thread.sleep(sleepTime);
+              if (!api.isDisableRatelimiter()) {
+                if (sleepTime > 0) {
+                  log.debug("Delaying requests to {} for {}ms to prevent hitting ratelimits", bucket, sleepTime);
+                  Thread.sleep(sleepTime);
+                }
               }
             } catch (InterruptedException e) {
               log.warn("We got interrupted while waiting for a rate limit!", e);
@@ -139,5 +141,5 @@ public class RatelimitManager {
       }
     }), delay, TimeUnit.MILLISECONDS);
   }
-
+  
 }
