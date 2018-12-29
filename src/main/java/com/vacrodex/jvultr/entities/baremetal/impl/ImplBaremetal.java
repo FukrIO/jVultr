@@ -89,7 +89,6 @@ public class ImplBaremetal implements Baremetal {
   
   @Override
   public boolean destory() throws TooSoonException {
-    //todo Send request
     return new RestRequest<Response>(getJVultr(), RestMethods.POST, RestEndpoints.BAREMTEAL_DESTROY)
         .setBody("SUBID=" + getSubId())
         .execute(RestRequestResult::getResponse)

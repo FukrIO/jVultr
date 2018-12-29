@@ -96,7 +96,7 @@ public class RatelimitManager {
             }
             try {
               int sleepTime = bucket.getTimeTillSpaceGetsAvailable();
-              if (sleepTime > 0) {
+              if (sleepTime > 0 && !api.isDisableRatelimiter()) {
                 log.debug("Delaying requests to {} for {}ms to prevent hitting ratelimits", bucket, sleepTime);
                 Thread.sleep(sleepTime);
               }

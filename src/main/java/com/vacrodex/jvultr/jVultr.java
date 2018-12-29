@@ -28,6 +28,7 @@ import com.vacrodex.jvultr.utils.rest.RestRequestResult;
 import java.util.Collection;
 import java.util.Set;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 
@@ -44,6 +45,9 @@ public class jVultr {
   private ObjectMapper objectMapper = new ObjectMapper();
   private ThreadPool threadPool;
   private RatelimitManager ratelimitManager;
+  
+  @Getter @Setter
+  private boolean disableRatelimiter = false;
   
   public jVultr(String key) {
     

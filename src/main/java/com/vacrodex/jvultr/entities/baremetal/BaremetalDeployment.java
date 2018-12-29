@@ -73,7 +73,7 @@ public class BaremetalDeployment {
           .join();
       
       if (body.has("SUBID")) {
-        return new ImplBaremetal(jVultr, body.get("SUBID").asInt());
+        return new ImplBaremetal(jVultr, body.get("SUBID").asInt(), false);
       }
       
       return null;
