@@ -30,9 +30,11 @@ public class RestRequestResult {
    *
    * @param request The request of the result.
    * @param response The response of the RestRequest.
+   *
    * @throws IOException Passed on from {@link ResponseBody#string()}.
    */
-  public RestRequestResult(RestRequest<?> request, Response response) throws IOException, InvalidEndpointException, InvalidKeyException, MoreDetailedException, InvalidSubscriptionId, TooSoonException {
+  public RestRequestResult(RestRequest<?> request, Response response)
+      throws IOException, InvalidEndpointException, InvalidKeyException, MoreDetailedException, InvalidSubscriptionId, TooSoonException {
     this.request = request;
     this.response = response;
     this.body = response.body();
@@ -49,11 +51,13 @@ public class RestRequestResult {
         throw new InvalidKeyException();
       }
       
-      if (stringBody.equals("Invalid server.") || stringBody.equals("Invalid server. Check SUBID value and ensure your API key matches the server's account")) {
+      if (stringBody.equals("Invalid server.") || stringBody
+          .equals("Invalid server. Check SUBID value and ensure your API key matches the server's account")) {
         throw new InvalidSubscriptionId();
       }
       
-      if (stringBody.equals("Unable to terminate server: Servers cannot be destroyed within 5 minutes of being created.")) {
+      if (stringBody
+          .equals("Unable to terminate server: Servers cannot be destroyed within 5 minutes of being created.")) {
         throw new TooSoonException();
       }
       
@@ -109,4 +113,5 @@ public class RestRequestResult {
   public JsonNode getJsonBody() {
     return jsonBody;
   }
+  
 }

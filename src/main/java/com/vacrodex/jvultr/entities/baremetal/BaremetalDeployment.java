@@ -108,7 +108,8 @@ public class BaremetalDeployment {
         builder.append("&hostname=").append(hostname);
       }
       if (userData != null) {
-        builder.append("&userdata=").append(Base64.getEncoder().encodeToString(userData.getBytes()));
+        builder.append("&userdata=")
+               .append(Base64.getEncoder().encodeToString(userData.getBytes()));
       }
       
       builder.append("&enable_ipv6=").append(ipv6);

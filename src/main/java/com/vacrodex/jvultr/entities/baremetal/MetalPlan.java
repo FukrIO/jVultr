@@ -6,4 +6,5 @@ package com.vacrodex.jvultr.entities.baremetal;
 public interface MetalPlan {
   
   int getId();
+  
 }

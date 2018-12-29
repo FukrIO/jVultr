@@ -10,4 +10,5 @@ public interface Information {
   String getEmail();
   
   String getName();
+  
 }

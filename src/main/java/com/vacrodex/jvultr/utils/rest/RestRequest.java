@@ -99,6 +99,7 @@ public class RestRequest<T> {
    * Sets the url parameters, e.g. a channel getId.
    *
    * @param parameters The parameters.
+   *
    * @return The current instance in order to chain call methods.
    */
   public RestRequest<T> setUrlParameters(String... parameters) {
@@ -119,6 +120,7 @@ public class RestRequest<T> {
    * Sets the body of the request.
    *
    * @param body The body of the request.
+   *
    * @return The current instance in order to chain call methods.
    */
   public RestRequest<T> setBody(JsonNode body) {
@@ -129,6 +131,7 @@ public class RestRequest<T> {
    * Sets the body of the request.
    *
    * @param body The body of the request.
+   *
    * @return The current instance in order to chain call methods.
    */
   public RestRequest<T> setBody(String body) {
@@ -150,6 +153,7 @@ public class RestRequest<T> {
    *
    * @param key The key of the parameter.
    * @param value The value of the parameter.
+   *
    * @return The current instance in order to chain call methods.
    */
   public RestRequest<T> addQueryParameter(String key, String value) {
@@ -158,9 +162,11 @@ public class RestRequest<T> {
   }
   
   /**
-   * Sets the multipart body of the request. If a multipart body is set, the {@link #setBody(String)} method is ignored!
+   * Sets the multipart body of the request. If a multipart body is set, the {@link
+   * #setBody(String)} method is ignored!
    *
    * @param multipartBody The multipart body of the request.
+   *
    * @return The current instance in order to chain call methods.
    */
   public RestRequest<T> setMultipartBody(MultipartBody multipartBody) {
@@ -172,6 +178,7 @@ public class RestRequest<T> {
    * Sets the amount of ratelimit retries we should use with this request.
    *
    * @param retries The amount of ratelimit retries.
+   *
    * @return The current instance in order to chain call methods.
    */
   public RestRequest<T> setRatelimitRetries(int retries) {
@@ -195,6 +202,7 @@ public class RestRequest<T> {
    * Executes the request. This will automatically retry if we hit a ratelimit.
    *
    * @param function A function which processes the rest response to the requested object.
+   *
    * @return A future which will contain the output of the function.
    */
   public CompletableFuture<T> execute(Function<RestRequestResult, T> function) {
@@ -227,6 +235,7 @@ public class RestRequest<T> {
    * Executes the request blocking.
    *
    * @return The result of the request.
+   *
    * @throws Exception If something went wrong while executing the request.
    */
   public RestRequestResult executeBlocking() throws Exception {
@@ -256,11 +265,13 @@ public class RestRequest<T> {
       default:
         throw new IllegalArgumentException("Unsupported http method!");
     }
-    log.debug("Trying to send {} request to {}{}", method.name(), endpoint.getFullUrl(urlParameters), body != null ? " with body " + body : "");
+    log.debug("Trying to send {} request to {}{}", method.name(), endpoint
+        .getFullUrl(urlParameters), body != null ? " with body " + body : "");
     
     try (Response response = getApi().getHttpClient().newCall(requestBuilder.build()).execute()) {
       RestRequestResult result = new RestRequestResult(this, response);
-      log.debug("Sent {} request to {} and received status code {} with{} body{}", method.name(), endpoint.getFullUrl(urlParameters), response.code(), result
+      log.debug("Sent {} request to {} and received status code {} with{} body{}", method
+          .name(), endpoint.getFullUrl(urlParameters), response.code(), result
           .getBody()
           .map(b -> "")
           .orElse(" empty"), result.getStringBody().map(s -> " " + s).orElse(""));
@@ -280,4 +291,5 @@ public class RestRequest<T> {
       return result;
     }
   }
+  
 }

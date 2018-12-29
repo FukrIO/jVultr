@@ -43,7 +43,8 @@ public class RatelimitManager {
     buckets.add(bucket);
     
     // Get the queue for the current bucket or create a new one if there's no one already
-    ConcurrentLinkedQueue<RestRequest<?>> queue = queues.computeIfAbsent(bucket, k -> new ConcurrentLinkedQueue<>());
+    ConcurrentLinkedQueue<RestRequest<?>> queue = queues
+        .computeIfAbsent(bucket, k -> new ConcurrentLinkedQueue<>());
     
     // Add the request to the queue and check if there's already a scheduler working on the queue
     boolean startScheduler = false;
@@ -138,4 +139,5 @@ public class RatelimitManager {
       }
     }), delay, TimeUnit.MILLISECONDS);
   }
+
 }

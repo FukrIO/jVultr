@@ -16,4 +16,5 @@ public interface MetalChangeApplication {
   int getAppId();
   
   int getSubId();
+  
 }

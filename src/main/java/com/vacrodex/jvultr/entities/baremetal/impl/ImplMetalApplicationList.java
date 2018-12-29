@@ -21,7 +21,8 @@ public class ImplMetalApplicationList implements MetalApplicationList {
   
   public ImplMetalApplicationList(JsonNode node) {
     applications = new HashMap<>();
-    node.fields().forEachRemaining(entry -> applications.put(Integer.valueOf(entry.getKey()), new ImplApplication(entry.getValue())));
+    node.fields().forEachRemaining(entry -> applications
+        .put(Integer.valueOf(entry.getKey()), new ImplApplication(entry.getValue())));
   }
   
   @Override
@@ -31,12 +32,14 @@ public class ImplMetalApplicationList implements MetalApplicationList {
   
   @Override
   public Application getApplicationByName(String name) {
-    return getApplicationList().stream().filter(app -> app.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+    return getApplicationList().stream().filter(app -> app.getName().equalsIgnoreCase(name))
+                               .findFirst().orElse(null);
   }
   
   @Override
   public Application getApplicationByShortName(String name) {
-    return getApplicationList().stream().filter(app -> app.getShortName().equalsIgnoreCase(name)).findFirst().orElse(null);
+    return getApplicationList().stream().filter(app -> app.getShortName().equalsIgnoreCase(name))
+                               .findFirst().orElse(null);
   }
   
   @Override
@@ -48,4 +51,5 @@ public class ImplMetalApplicationList implements MetalApplicationList {
   public Set<Integer> getApplicationIds() {
     return applications.keySet();
   }
+  
 }

@@ -19,7 +19,8 @@ public class RatelimitBucket {
   /**
    * Gets the rest endpoint of the bucket.
    *
-   * @return The endpoint of the bucket. If it's a global limit, the endpoint will be not be present.
+   * @return The endpoint of the bucket. If it's a global limit, the endpoint will be not be
+   *     present.
    */
   public Optional<RestEndpoints> getEndpoint() {
     return Optional.ofNullable(endpoint);
@@ -44,7 +45,8 @@ public class RatelimitBucket {
   }
   
   /**
-   * Checks if there is still "space" in this bucket, which means that you can still send requests without being ratelimited.
+   * Checks if there is still "space" in this bucket, which means that you can still send requests
+   * without being ratelimited.
    *
    * @return Whether you can send requests without being ratelimited or not.
    */
@@ -82,4 +84,5 @@ public class RatelimitBucket {
     RatelimitBucket otherBucket = (RatelimitBucket) obj;
     return otherBucket.endpoint == endpoint;
   }
+
 }

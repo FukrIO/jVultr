@@ -14,4 +14,5 @@ public class MoreDetailedException extends VultrException {
     super(message, 412);
     this.message = message;
   }
+
 }

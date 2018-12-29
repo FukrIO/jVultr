@@ -68,4 +68,5 @@ public interface Baremetal {
   boolean refreshInformation();
   
   boolean refreshInformation(boolean application, boolean region);
+  
 }

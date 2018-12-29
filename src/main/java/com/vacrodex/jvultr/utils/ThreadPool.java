@@ -20,7 +20,8 @@ public class ThreadPool {
   private static int KEEP_ALIVE_TIME = 60;
   
   private final ExecutorService executorService = new ThreadPoolExecutor(CORE_POOL_SIZE, MAXIMUM_POOL_SIZE, KEEP_ALIVE_TIME, TIME_UNIT, new SynchronousQueue<>());
-  private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(CORE_POOL_SIZE);
+  private final ScheduledExecutorService scheduler = Executors
+      .newScheduledThreadPool(CORE_POOL_SIZE);
   private final ConcurrentHashMap<String, ExecutorService> executorServiceSingeThreads = new ConcurrentHashMap<>();
   
   public ExecutorService getExecutorService() {
@@ -41,4 +42,5 @@ public class ThreadPool {
       return service;
     }
   }
+
 }

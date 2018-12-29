@@ -50,23 +50,28 @@ public class ImplBaremetal implements Baremetal {
   private Application application;
   private Date creationDate;
   
-  public ImplBaremetal(jVultr jVultr, int subId) {
+  public ImplBaremetal(jVultr jVultr, int subId, boolean extraInformation) {
     this.jVultr = jVultr;
     this.subId = subId;
-    refreshInformation(true, true);
+    refreshInformation(extraInformation, extraInformation);
+  }
+  
+  public ImplBaremetal(jVultr jVultr, int subId) {
+    this(jVultr, subId, true);
   }
   
   @Override
   public boolean setLabel(String label) {
-    return new RestRequest<Response>(getJVultr(), RestMethods.POST, RestEndpoints.BAREMETAL_LABEL_SET)
-        .setBody("SUBID=" + getSubId() + "&label=" + label)
-        .execute(RestRequestResult::getResponse)
-        .exceptionally(throwable -> {
-          throwable.printStackTrace();
-          return null;
-        })
-        .join()
-        .code() == 200;
+    return
+        new RestRequest<Response>(getJVultr(), RestMethods.POST, RestEndpoints.BAREMETAL_LABEL_SET)
+            .setBody("SUBID=" + getSubId() + "&label=" + label)
+            .execute(RestRequestResult::getResponse)
+            .exceptionally(throwable -> {
+              throwable.printStackTrace();
+              return null;
+            })
+            .join()
+            .code() == 200;
   }
   
   @Override
@@ -121,15 +126,16 @@ public class ImplBaremetal implements Baremetal {
   
   @Override
   public boolean reinstall() {
-    return new RestRequest<Response>(getJVultr(), RestMethods.POST, RestEndpoints.BAREMETAL_REINSTALL)
-        .setBody("SUBID=" + getSubId())
-        .execute(RestRequestResult::getResponse)
-        .exceptionally(throwable -> {
-          throwable.printStackTrace();
-          return null;
-        })
-        .join()
-        .code() == 200;
+    return
+        new RestRequest<Response>(getJVultr(), RestMethods.POST, RestEndpoints.BAREMETAL_REINSTALL)
+            .setBody("SUBID=" + getSubId())
+            .execute(RestRequestResult::getResponse)
+            .exceptionally(throwable -> {
+              throwable.printStackTrace();
+              return null;
+            })
+            .join()
+            .code() == 200;
   }
   
   @Override
@@ -149,7 +155,7 @@ public class ImplBaremetal implements Baremetal {
     return refreshInformation(false, false);
   }
   
-  public boolean refreshInformation(boolean refApp, boolean refRegion) {
+  public boolean refreshInformation(boolean app, boolean region) {
     JsonNode body = new RestRequest<JsonNode>(getJVultr(), RestMethods.GET, RestEndpoints.BAREMETAL_LIST)
         .addQueryParameter("SUBID", String.valueOf(getSubId()))
         .execute(RestRequestResult::getJsonBody)
@@ -170,7 +176,7 @@ public class ImplBaremetal implements Baremetal {
     gatewayv4 = body.get("gateway_v4").asText();
     netmaskv4 = body.get("netmask_v4").asText();
     
-    if (refApp) {
+    if (app) {
       application = getJVultr().getApplicationById(body.get("APPID").asInt());
     }
     status = Status.ofVultr(body.get("status").asText());
@@ -183,11 +189,12 @@ public class ImplBaremetal implements Baremetal {
     }
     
     defaultPassword = body.get("default_password").asText();
-    if (refRegion) {
-      region = getJVultr().getRegionByName(body.get("location").asText());
+    if (region) {
+      this.region = getJVultr().getRegionByName(body.get("location").asText());
     }
     datacenter = new ImplDatacenter(body.get("DCID").asInt());
     
     return true;
   }
+  
 }

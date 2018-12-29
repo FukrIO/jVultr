@@ -6,4 +6,5 @@ package com.vacrodex.jvultr.entities.os;
 public interface OS {
   
   int getId();
+  
 }

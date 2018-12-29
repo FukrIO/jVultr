@@ -14,4 +14,5 @@ public interface AccountInformation {
   Date getLastPaymentDate();
   
   double getLastPaymentAmount();
+  
 }

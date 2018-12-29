@@ -20,7 +20,8 @@ public class ImplBackupList implements BackupList {
   
   public ImplBackupList(JsonNode node) {
     backups = new HashMap<>();
-    node.fields().forEachRemaining(entry -> backups.put(entry.getKey(), new ImplBackup(entry.getValue())));
+    node.fields()
+        .forEachRemaining(entry -> backups.put(entry.getKey(), new ImplBackup(entry.getValue())));
   }
   
   @Override
@@ -30,7 +31,8 @@ public class ImplBackupList implements BackupList {
   
   @Override
   public Backup getBackupByDescription(String name) {
-    return getBackupList().stream().filter(backup -> backup.getDescription().equalsIgnoreCase(name)).findFirst().orElse(null);
+    return getBackupList().stream().filter(backup -> backup.getDescription().equalsIgnoreCase(name))
+                          .findFirst().orElse(null);
   }
   
   @Override
@@ -42,4 +44,5 @@ public class ImplBackupList implements BackupList {
   public Set<String> getBackupIds() {
     return backups.keySet();
   }
+  
 }

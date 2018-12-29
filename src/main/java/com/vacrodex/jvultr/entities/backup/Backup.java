@@ -16,4 +16,5 @@ public interface Backup {
   long getSize();
   
   BackupStatus getStatus();
+  
 }

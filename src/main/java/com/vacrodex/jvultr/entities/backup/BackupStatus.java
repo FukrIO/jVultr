@@ -1,8 +1,8 @@
 package com.vacrodex.jvultr.entities.backup;
 
 /**
- * There's no clear documentation for this, so at a later date we need to rest every possible combo (or open a support ticket asking for more
- * information about this)
+ * There's no clear documentation for this, so at a later date we need to rest every possible combo
+ * (or open a support ticket asking for more information about this)
  *
  * @author Cameron Wolfe
  */

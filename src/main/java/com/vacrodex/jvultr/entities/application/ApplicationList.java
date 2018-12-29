@@ -20,4 +20,5 @@ public interface ApplicationList {
   Collection<Application> getApplicationList();
   
   Set<Integer> getApplicationIds();
+  
 }

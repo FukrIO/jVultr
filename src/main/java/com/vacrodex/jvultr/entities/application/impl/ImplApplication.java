@@ -25,4 +25,5 @@ public class ImplApplication implements Application {
     deployName = node.get("deploy_name").asText();
     surcharge = node.get("surcharge").asDouble();
   }
+  
 }

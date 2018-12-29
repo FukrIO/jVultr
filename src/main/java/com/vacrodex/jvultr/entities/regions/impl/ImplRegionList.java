@@ -46,6 +46,8 @@ public class ImplRegionList implements RegionList {
   
   @Override
   public Region getRegionByName(String name) {
-    return getRegionList().stream().filter(region -> region.getName().equals(name)).findFirst().orElse(null);
+    return getRegionList().stream().filter(region -> region.getName().equals(name)).findFirst()
+                          .orElse(null);
   }
+  
 }

@@ -14,4 +14,5 @@ public interface Application {
   String getDeployName();
   
   double getSurcharge();
+  
 }

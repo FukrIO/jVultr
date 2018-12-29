@@ -24,4 +24,5 @@ public interface MetalBandwidth {
   long[] outgoingMB();
   
   long[] outgoingGB();
+  
 }

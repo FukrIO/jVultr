@@ -11,6 +11,7 @@ public enum Status {
   UNKNOWN;
   
   public static Status ofVultr(String vultr) {
-    return Stream.of(Status.values()).filter(status -> status.name().equalsIgnoreCase(vultr)).findFirst().orElse(UNKNOWN);
+    return Stream.of(Status.values()).filter(status -> status.name().equalsIgnoreCase(vultr))
+                 .findFirst().orElse(UNKNOWN);
   }
 }

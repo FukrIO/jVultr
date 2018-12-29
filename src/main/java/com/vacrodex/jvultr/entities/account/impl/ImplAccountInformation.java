@@ -24,7 +24,8 @@ public class ImplAccountInformation implements AccountInformation {
     
     balance = (data.has("balance") ? data.get("balance").asDouble() : 0.0);
     pendingCharges = (data.has("pending_charges") ? data.get("pending_charges").asDouble() : 0.0);
-    lastPaymentAmount = (data.has("last_payment_amount") ? data.get("last_payment_amount").asDouble() : 0.0);
+    lastPaymentAmount = (data.has("last_payment_amount") ? data.get("last_payment_amount")
+                                                               .asDouble() : 0.0);
     
     if (data.has("last_payment_date")) {
       try {

@@ -31,4 +31,5 @@ public class Memory {
   public long getAsB() {
     return memory;
   }
+  
 }

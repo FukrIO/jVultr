@@ -18,4 +18,5 @@ public interface RegionList {
   Set<Integer> getRegionIds();
   
   Region getRegionByName(String name);
+  
 }
